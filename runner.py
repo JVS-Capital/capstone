@@ -11,9 +11,9 @@ import matplotlib.pyplot as plt
 matplotlib.use("Agg")
 
 # File paths
-INPUT_FILE_PATH = "/home/jvs/Desktop/CRYPTAM/4/caps_data.csv"
-OUTPUT_CONFUSION_MATRIX_PATH = "/home/jvs/Desktop/CRYPTAM/4/3_confusion_matrix.png"
-OUTPUT_STATES_DATA_PATH = "/home/jvs/Desktop/CRYPTAM/4/4_data.csv"
+INPUT_FILE_PATH = "data.csv"
+OUTPUT_CONFUSION_MATRIX_PATH = "confusion_matrix.png"
+OUTPUT_STATES_DATA_PATH = "output_data.csv"
 
 
 def load_csv_data(file_path: str) -> pd.DataFrame:

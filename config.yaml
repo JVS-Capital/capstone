@@ -1,0 +1,25 @@
+# config.yaml
+
+data_source:
+  websocket_url: "wss://ws.okx.com:8443/ws/v5/public"
+  rest_api_url: "https://www.okx.com/api/v5/market/tickers?instType=SPOT"
+
+filtering:
+  volume_threshold_usd: 2000000   # 24h volume
+  correlation_threshold: 0.20     # max allowed pairwise correlation
+  returns_window: 500             # number of 5-minute bars for correlation
+
+hmm_model:
+  n_states: 3                     # Bull, Bear, Sideways
+  initial_persistence: 0.6         # initial probability of staying in same state
+  damping_factor: 0.9              # for EM smoothing
+  gradient_clip_value: 0.1         # to avoid numerical instability
+
+walk_forward:
+  train_window_size: 500           # observations
+  test_window_size: 1              # next point prediction
+
+output:
+  save_results: true
+  results_dir: "./results"
+  figures_dir: "./figures"

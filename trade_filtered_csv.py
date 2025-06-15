@@ -11,11 +11,11 @@ import csv, json, time, traceback, requests, websocket
 from datetime import datetime
 from pathlib import Path
 
-# ---------------- PATHS --------------------------------------------------
+#  PATHS 
 BASE_DIR = Path(__file__).resolve().parent
 CSV_DIR  = BASE_DIR / "data"; CSV_DIR.mkdir(exist_ok=True)
 
-# ---------------- SETTINGS ----------------------------------------------
+# SETTINGS 
 VOLUME_TH         = 80_000_000                # 24h volume filter (USDT)
 EXCLUDED_PAIRS    = {"USDC-USDT"}
 CHANNEL           = "trades"
@@ -26,7 +26,7 @@ TRADE_PRINT_STEP  = 1000                     # heartbeat every N trades
 
 HDR = ["ts", "price", "size", "side", "trade_id"]
 
-# ---------------- HELPERS ------------------------------------------------
+# HELPERS 
 
 def high_volume_pairs():
     url = "https://www.okx.com/api/v5/market/tickers?instType=SPOT"
@@ -45,13 +45,13 @@ def ensure_csv(inst):
         print("📄 Created", fn.name)
     return fn
 
-# ---------------- STREAMER ----------------------------------------------
+#  STREAMER 
 class TradeStreamer:
     def __init__(self, pairs):
         self.pairs   = pairs
         self.counter = {p: 0 for p in pairs}
 
-    # ---- callbacks --------------------------------------------------
+    # callbacks 
     def on_open(self, ws):
         batches = [self.pairs[i:i+MAX_BATCH] for i in range(0, len(self.pairs), MAX_BATCH)]
         for b in batches:
@@ -113,7 +113,7 @@ class TradeStreamer:
     def on_close(self, ws, *_):
         print('🔒 WS closed')
 
-    # ---- main loop --------------------------------------------------
+    # main loop 
     def run(self):
         while True:
             try:
@@ -127,10 +127,10 @@ class TradeStreamer:
                 app.run_forever(ping_interval=PING_INTERVAL, ping_timeout=PING_TIMEOUT)
             except Exception:
                 traceback.print_exc()
-            print('🔁 Reconnecting in 5 s …')
+            print(' Reconnecting in 5 s …')
             time.sleep(5)
 
-# ---------------- MAIN ---------------------------------------------------
+#  MAIN 
 if __name__ == '__main__':
     try:
         pairs = [p for p in high_volume_pairs() if p not in EXCLUDED_PAIRS]

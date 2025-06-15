@@ -72,7 +72,7 @@ def main():
     # 5) save labeled CSV
     out_csv = args.out_csv or f"{csv_path.stem}_hmm.csv"
     df.reset_index().to_csv(out_csv, index=False)
-    print(f"✓ regimes & true_sem saved → {out_csv}")
+    print(f" regimes & true_sem saved → {out_csv}")
 
     # 6) plot with semantic colors
     out_png = args.out_plot or f"{csv_path.stem}_hmm.png"
@@ -92,7 +92,7 @@ def main():
     ax.legend(title="Regime")
     plt.tight_layout()
     fig.savefig(out_png, dpi=120)
-    print(f"✓ plot saved → {out_png}")
+    print(f" plot saved → {out_png}")
     if args.show:
         plt.show()
     plt.close(fig)
